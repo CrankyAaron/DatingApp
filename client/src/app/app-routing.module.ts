@@ -5,6 +5,9 @@ import { MemberListComponent } from './members/member-list/member-list.component
 import { ListsComponent } from './lists/lists.component';
 import { MessagesComponent } from './messages/messages.component';
 import { AuthGuard } from './_guards/auth.guard';
+import { TestErrorComponent } from './errors/test-error/test-error.component';
+import { NotFoundComponent } from './errors/not-found/not-found.component';
+import { ServerErrorComponent } from './errors/server-error/server-error.component';
 
 const routes: Routes = [
     { path: '', component: HomeComponent },
@@ -19,7 +22,10 @@ const routes: Routes = [
             { path: 'messages', component: MessagesComponent }
         ]
     },
-    { path: '**', component: MessagesComponent, pathMatch: 'full' }, // this is the wild card
+    { path: 'errors', component: TestErrorComponent }, // this is the wild card
+    { path: 'not-found', component: NotFoundComponent }, // this is the wild card
+    { path: 'server-error', component: ServerErrorComponent }, // this is the wild card
+    { path: '**', component: NotFoundComponent, pathMatch: 'full' }, // this is the wild card
 
 ];
 
