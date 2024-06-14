@@ -13,10 +13,20 @@ namespace API.Extensions
     {
         public static IServiceCollection AddApplicationServices(this IServiceCollection services, IConfiguration config)
         {
-            services.AddDbContext<DataContext>(opt =>
+            var connectionString = config.GetConnectionString("AZURE_SQL_CONNECTIONSTRING");
+            if (string.IsNullOrEmpty(connectionString))
             {
-                opt.UseSqlServer(config.GetConnectionString("DefaultConnection"));
-            });
+                services.AddDbContext<DataContext>(opt =>
+                    opt.UseSqlServer(config.GetConnectionString("DefaultConnection")));
+            }
+            else
+            {
+                services.AddDbContext<DataContext>(opt =>
+                {
+                    services.AddDbContext<DataContext>(opt => opt.UseSqlServer(connectionString));
+                });
+            }
+
             services.AddCors();
             services.AddScoped<ITokenService, TokenService>();
             return services;
