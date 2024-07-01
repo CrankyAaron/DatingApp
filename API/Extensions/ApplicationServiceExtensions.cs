@@ -23,12 +23,14 @@ namespace API.Extensions
             {
                 services.AddDbContext<DataContext>(opt =>
                 {
-                    services.AddDbContext<DataContext>(opt => opt.UseSqlServer(connectionString));
+                    opt.UseSqlServer(connectionString);
                 });
             }
 
             services.AddCors();
             services.AddScoped<ITokenService, TokenService>();
+            services.AddScoped<IUserRepository, UserRespository>();
+            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             return services;
         }
     }
